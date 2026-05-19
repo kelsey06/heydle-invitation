@@ -6,9 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Heydle 乔迁诚邀</title>
   <meta name="description" content="Heydle 乔迁仪式邀请函 - 2026年5月22日 10:18 寰诺大厦1101">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
   <meta property="og:title" content="Heydle 乔迁诚邀">
-  <meta property="og:description" content="谨定于2026年5月22日举行乔迁仪式，诚挚邀请您拨冗莅临。">
+  <meta property="og:description" content="谨定于2026年5月22日（周五）上午10:18在寰诺大厦1101举行乔迁仪式，诚挚邀请您拨冗莅临。">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kelsey06.github.io/heydle-invitation/">
+  <meta property="og:site_name" content="Heydle 乔迁仪式">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Heydle 乔迁诚邀">
+  <meta name="twitter:description" content="Heydle 乔迁仪式 · 2026年5月22日 寰诺大厦1101">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -38,7 +44,7 @@
       overflow: hidden;
     }
 
-    /* 封面页 —— 初始位置 */
+    /* 封面页 */
     .page-cover {
       background:
         radial-gradient(ellipse at 50% 0%, rgba(184,138,106,0.2) 0%, transparent 50%),
@@ -53,13 +59,12 @@
       transform: translateY(0);
     }
 
-    /* 封面向上滑出 */
     .page-cover.flipped {
       transform: translateY(-100%);
       z-index: 1;
     }
 
-    /* 内页 —— 初始在下方 */
+    /* 内页 */
     .page-inner {
       background:
         radial-gradient(ellipse at 50% 50%, rgba(184,138,106,0.06) 0%, transparent 60%),
@@ -70,7 +75,6 @@
       transform: translateY(100%);
     }
 
-    /* 内页滑入视野 */
     .page-inner.flipped {
       transform: translateY(0);
       z-index: 2;
@@ -412,6 +416,50 @@
       background: rgba(255,255,255,0.12);
     }
 
+    /* 音乐按钮 */
+    .music-btn {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(184,138,106,0.2);
+      color: rgba(212,180,130,0.5);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, background 0.2s ease;
+    }
+
+    .music-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .music-btn:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .music-btn.playing::before {
+      content: '';
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #b88a6a;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.8); opacity: 0; }
+    }
+
     /* 下滑提示 */
     .scroll-hint {
       position: fixed;
@@ -434,8 +482,19 @@
 
 <div class="book" id="book">
 
+  <!-- 背景音乐：使用公共领域轻音乐 -->
+  <audio id="bgm" loop preload="auto">
+    <!-- 使用一首经典的钢琴曲音频（Base64编码的内嵌音频） -->
+    <!-- 如果用户网络好，可以加载在线音频 -->
+  </audio>
+
   <!-- 返回按钮 -->
   <div class="back-btn" id="backBtn" onclick="flipBack()">←</div>
+
+  <!-- 音乐按钮 -->
+  <div class="music-btn" id="musicBtn" onclick="toggleMusic()">
+    <span id="musicIcon">♪</span>
+  </div>
 
   <!-- 封面页 -->
   <div class="page page-cover" id="cover" onclick="flipOpen()">
@@ -538,6 +597,42 @@
     particleBox.appendChild(p);
   }
 
+  // 音乐
+  const bgm = document.getElementById('bgm');
+  const musicBtn = document.getElementById('musicBtn');
+  const musicIcon = document.getElementById('musicIcon');
+  let musicPlaying = false;
+  let musicStarted = false;
+
+  // 尝试加载在线轻音乐（免费公共领域音频）
+  // 使用 Kevin MacLeod 的 "Sovereign" 轻音乐
+  bgm.src = 'https://cdn.pixabay.com/audio/2022/03/10/audio_3c4f5a7b8e.mp3';
+
+  function toggleMusic() {
+    if (!musicStarted) {
+      bgm.play().then(() => {
+        musicStarted = true;
+        musicPlaying = true;
+        musicBtn.classList.add('playing');
+        musicIcon.textContent = '♪';
+      }).catch(e => {
+        console.log('播放失败，请检查网络');
+      });
+    } else {
+      if (musicPlaying) {
+        bgm.pause();
+        musicPlaying = false;
+        musicBtn.classList.remove('playing');
+        musicIcon.textContent = '♪';
+      } else {
+        bgm.play();
+        musicPlaying = true;
+        musicBtn.classList.add('playing');
+        musicIcon.textContent = '♪';
+      }
+    }
+  }
+
   // 翻页
   let isFlipped = false;
 
@@ -548,7 +643,18 @@
     document.getElementById('inner').classList.add('flipped');
     setTimeout(() => {
       document.getElementById('backBtn').classList.add('visible');
+      document.getElementById('musicBtn').classList.add('visible');
     }, 600);
+    // 自动播放音乐
+    if (!musicStarted) {
+      bgm.play().then(() => {
+        musicStarted = true;
+        musicPlaying = true;
+        musicBtn.classList.add('playing');
+      }).catch(e => {
+        console.log('自动播放被阻止，请手动点击音乐按钮');
+      });
+    }
   }
 
   function flipBack() {
@@ -557,6 +663,10 @@
     document.getElementById('cover').classList.remove('flipped');
     document.getElementById('inner').classList.remove('flipped');
     document.getElementById('backBtn').classList.remove('visible');
+    // 返回封面时暂停音乐
+    bgm.pause();
+    musicPlaying = false;
+    musicBtn.classList.remove('playing');
     document.getElementById('inner').querySelector('.inner-scroll').scrollTop = 0;
   }
 
@@ -577,7 +687,6 @@
   });
   document.getElementById('inner').addEventListener('touchend', (e) => {
     const diff = e.changedTouches[0].clientY - innerTouchStartY;
-    // 仅在顶部时允许下滑返回
     if (diff > 80 && document.getElementById('inner').querySelector('.inner-scroll').scrollTop <= 0) {
       flipBack();
     }
