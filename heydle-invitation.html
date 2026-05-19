@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Heydle 乔迁诚邀</title>
+  <meta name="description" content="Heydle 乔迁仪式邀请函 - 2026年5月22日 10:18 寰诺大厦1101">
+
+  <!-- 微信分享卡片 -->
+  <meta property="og:title" content="Heydle 乔迁诚邀">
+  <meta property="og:description" content="谨定于2026年5月22日举行乔迁仪式，诚挚邀请您拨冗莅临。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://heydle-invitation.netlify.app/preview.jpg">
+  <meta property="og:url" content="https://heydle-invitation.netlify.app">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a1109;
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Georgia', serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 全屏容器 */
+    .page {
+      width: 100vw;
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 顶部金色光晕 */
+    .top-glow {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(212,180,130,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* 主视觉区 */
+    .hero {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 60px 24px 40px;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(184,138,106,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 100%, rgba(93,61,46,0.3) 0%, transparent 50%),
+        linear-gradient(180deg, #1a1109 0%, #2a1a0f 50%, #1a1109 100%);
+    }
+
+    /* 顶部标签 */
+    .brand-tag {
+      display: inline-block;
+      border: 1px solid rgba(212,180,130,0.4);
+      color: #d4b496;
+      font-size: 10px;
+      letter-spacing: 4px;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 36px;
+      text-transform: uppercase;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    /* 品牌名 */
+    .brand {
+      font-size: clamp(42px, 12vw, 72px);
+      font-weight: 300;
+      color: #e8c4a8;
+      letter-spacing: 12px;
+      margin-bottom: 8px;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      animation: fadeUp 0.8s ease 0.2s both;
+      text-shadow: 0 0 40px rgba(232,196,168,0.3);
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: rgba(212,180,130,0.5);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+
+    /* 分隔线 + 标题 */
+    .divider-hero {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #d4b496, transparent);
+      margin-bottom: 36px;
+      animation: expandLine 1s ease 0.4s both;
+    }
+
+    .hero-title {
+      font-size: clamp(24px, 7vw, 40px);
+      color: #fff;
+      font-weight: 400;
+      letter-spacing: 10px;
+      margin-bottom: 12px;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .hero-sub {
+      font-size: 12px;
+      color: rgba(212,180,130,0.5);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: fadeUp 0.8s ease 0.6s both;
+    }
+
+    /* 核心信息区 */
+    .info-section {
+      width: 100%;
+      padding: 56px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(184,138,106,0.06) 0%, transparent 60%),
+        #1a1109;
+      position: relative;
+    }
+
+    .section-line {
+      width: 40px;
+      height: 1px;
+      background: #b88a6a;
+      margin-bottom: 32px;
+      opacity: 0.6;
+    }
+
+    .greeting {
+      max-width: 340px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      line-height: 2.2;
+      text-align: justify;
+      margin-bottom: 44px;
+    }
+
+    .greeting .hl {
+      color: #d4b496;
+      font-weight: 500;
+    }
+
+    /* 信息卡片 */
+    .info-cards {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .info-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(184,138,106,0.15);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .info-icon-wrap {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, rgba(184,138,106,0.2), rgba(184,138,106,0.05));
+      border: 1px solid rgba(184,138,106,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .info-text {
+      flex: 1;
+    }
+
+    .info-label {
+      font-size: 10px;
+      color: rgba(212,180,130,0.4);
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+    }
+
+    .info-value {
+      font-size: 14px;
+      color: #e8c4a8;
+      font-weight: 500;
+    }
+
+    /* 流程时间线 */
+    .agenda-section {
+      width: 100%;
+      max-width: 360px;
+      margin-bottom: 48px;
+    }
+
+    .agenda-title {
+      font-size: 11px;
+      color: rgba(212,180,130,0.4);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 4px;
+      bottom: 4px;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(184,138,106,0.4), transparent);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .tl-item:last-child { margin-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -24px;
+      top: 4px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #b88a6a;
+      border: 2px solid #1a1109;
+      box-shadow: 0 0 8px rgba(184,138,106,0.4);
+    }
+
+    .tl-time {
+      font-size: 12px;
+      color: #b88a6a;
+      font-weight: 600;
+      margin-bottom: 3px;
+      font-family: 'Georgia', serif;
+    }
+
+    .tl-event {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* RSVP */
+    .rsvp-section {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .rsvp-title {
+      font-size: 12px;
+      color: #b88a6a;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .rsvp-hint {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 20px;
+    }
+
+    .rsvp-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #b88a6a, #8a6a4a);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 44px;
+      border-radius: 28px;
+      font-size: 13px;
+      letter-spacing: 3px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(184,138,106,0.3);
+    }
+
+    .rsvp-btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 10px rgba(184,138,106,0.4);
+    }
+
+    /* 底部 */
+    .footer {
+      width: 100%;
+      padding: 40px 24px;
+      text-align: center;
+      border-top: 1px solid rgba(184,138,106,0.1);
+    }
+
+    .footer-brand {
+      font-size: 18px;
+      color: #b88a6a;
+      letter-spacing: 5px;
+      font-family: 'Georgia', serif;
+      margin-bottom: 6px;
+    }
+
+    .footer-addr {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .footer-seal {
+      font-size: 10px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 1px;
+    }
+
+    /* 粒子装饰 */
+    .particle {
+      position: fixed;
+      width: 3px;
+      height: 3px;
+      background: rgba(212,180,130,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: floatParticle 4s ease-in-out infinite;
+    }
+
+    @keyframes floatParticle {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+      50% { transform: translateY(-20px) scale(1.2); opacity: 0.8; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes expandLine {
+      from { width: 0; }
+      to { width: 40px; }
+    }
+
+    /* 滚动动画 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <div class="top-glow"></div>
+
+  <!-- 粒子 -->
+  <div class="particle" style="top:15%;left:10%;animation-delay:0s;"></div>
+  <div class="particle" style="top:30%;right:12%;animation-delay:1.2s;width:2px;height:2px;"></div>
+  <div class="particle" style="top:60%;left:8%;animation-delay:2.4s;width:4px;height:4px;"></div>
+  <div class="particle" style="top:80%;right:15%;animation-delay:0.8s;"></div>
+  <div class="particle" style="top:45%;left:85%;animation-delay:1.8s;width:2px;height:2px;"></div>
+
+  <!-- 主视觉 -->
+  <div class="hero">
+    <div class="brand-tag">Grand Opening</div>
+    <div class="brand">Heydle</div>
+    <div class="brand-sub">Fashion & Lifestyle</div>
+    <div class="divider-hero"></div>
+    <div class="hero-title">乔 迁 诚 邀</div>
+    <div class="hero-sub">Relocation Invitation</div>
+  </div>
+
+  <!-- 信息区 -->
+  <div class="info-section">
+    <div class="section-line reveal"></div>
+
+    <div class="greeting reveal">
+      尊敬的贵宾：<br><br>
+      Heydle 自创立以来，承蒙各位的关心与支持，一路成长。如今我们即将迁入全新办公室，以更美好的空间开启下一段时尚旅程。<br><br>
+      谨定于<span class="hl">5月22日</span>举行乔迁仪式，诚挚邀请您拨冗莅临，共同见证 Heydle 的全新出发。
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card reveal">
+        <div class="info-icon-wrap">📅</div>
+        <div class="info-text">
+          <div class="info-label">Date</div>
+          <div class="info-value">2026年5月22日 星期四</div>
+        </div>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon-wrap">⏰</div>
+        <div class="info-text">
+          <div class="info-label">Time</div>
+          <div class="info-value">10:18</div>
+        </div>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon-wrap">📍</div>
+        <div class="info-text">
+          <div class="info-label">Venue</div>
+          <div class="info-value">寰诺大厦 1101</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 流程 -->
+    <div class="agenda-section">
+      <div class="agenda-title reveal">活动流程 · Agenda</div>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-time">10:18</div>
+          <div class="tl-event">乔迁仪式 · 开幕致辞</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-time">10:35</div>
+          <div class="tl-event">剪彩仪式 · 合影留念</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-time">10:50</div>
+          <div class="tl-event">交流茶歇 · 自由交流</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RSVP -->
+    <div class="rsvp-section reveal">
+      <div class="rsvp-title">敬请赐复 · RSVP</div>
+      <div class="rsvp-hint">请于5月22日前回复是否出席</div>
+      <a class="rsvp-btn" href="tel:">确认出席</a>
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer reveal">
+    <div class="footer-brand">Heydle</div>
+    <div class="footer-addr">寰诺大厦 1101</div>
+    <div class="footer-seal">敬邀 · Heydle</div>
+  </div>
+</div>
+
+<script>
+  // 滚动揭示动画
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
